@@ -12,7 +12,7 @@ The following **required** functionality is completed:
 * [x]	User can **view tweets from their home timeline**
 * [x] User is displayed the username, name, and body for each tweet
 * [ ] User is displayed the [relative timestamp](https://gist.github.com/nesquena/f786232f5ef72f6e10a7) for each tweet "8m", "7h"
-* [x ] User can **compose and post a new tweet**
+* [x] User can **compose and post a new tweet**
     * [x] User can click a “Compose” icon in the Action Bar on the top right
     * [x] User can then enter a new tweet and post this to Twitter
     * [x] User is taken back to home timeline with **new tweet visible** in timeline
@@ -59,7 +59,7 @@ Describe any challenges encountered while building the app.
 
 ## License
 
-    Copyright [yyyy] [name of copyright owner]
+    Copyright [2022] [Elmer Adrian Ortega Valdes]
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
