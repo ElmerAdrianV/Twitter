@@ -100,7 +100,7 @@ public class TimelineActivity extends AppCompatActivity {
             // Update the RV with the tweet
             //Modify data source of tweets
             tweets.add(0,tweet);
-            //Update the adapater
+            //Update the adapter
            adapter.notifyItemInserted(0);
            //To return to position 0
            rvTweets.smoothScrollToPosition(0);
