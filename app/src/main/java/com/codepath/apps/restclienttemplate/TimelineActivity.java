@@ -114,7 +114,8 @@ public class TimelineActivity extends AppCompatActivity {
                 }
                 // Now we call setRefreshing(false) to signal refresh has finished
                 swipeContainer.setRefreshing(false);
-                //Log.d(TAG, "onSuccess: Estoy funcionando");
+                rvTweets.smoothScrollToPosition(0);
+                Log.d(TAG, "onSuccess: Estoy funcionando");
             }
 
             @Override
@@ -163,6 +164,7 @@ public class TimelineActivity extends AppCompatActivity {
             @Override
             public void onSuccess(int statusCode, Headers headers, JSON json) {
                 Log.i(TAG,"OnSuccess"+json.toString() );
+
                 JSONArray jsonArray= json.jsonArray;
                 try{
 

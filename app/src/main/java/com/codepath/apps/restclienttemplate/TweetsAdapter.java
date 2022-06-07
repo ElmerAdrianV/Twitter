@@ -62,11 +62,13 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
 
     public class ViewHolder extends RecyclerView.ViewHolder{
         ImageView ivProfileImage;
+        ImageView ivImage;
         TextView tvBody;
         TextView tvScreenName;
         public ViewHolder(@NonNull View itemView){
             super(itemView);
             ivProfileImage=itemView.findViewById(R.id.ivProfileImage);
+            ivImage=itemView.findViewById(R.id.ivImage);
             tvBody=itemView.findViewById(R.id.tvBody);
             tvScreenName=itemView.findViewById(R.id.tvScreenName);
         }
@@ -76,6 +78,11 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
             tvBody.setText(tweet.body);
             tvScreenName.setText(tweet.user.screenName);
             Glide.with(context).load(tweet.user.profileImageUrl).into(ivProfileImage);
+            if(tweet.imageURL!=null){
+                Glide.with(context).load(tweet.imageURL).into(ivImage);
+                ivImage.setVisibility(View.VISIBLE);
+            }
+
         }
     }
 }
