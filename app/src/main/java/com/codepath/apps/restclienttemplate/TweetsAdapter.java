@@ -1,7 +1,6 @@
 package com.codepath.apps.restclienttemplate;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,10 +11,11 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
+import com.bumptech.glide.request.RequestOptions;
 import com.codepath.apps.restclienttemplate.models.Tweet;
 
 import java.util.List;
-import java.util.ListResourceBundle;
 
 public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder> {
     Context context;
@@ -64,27 +64,47 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
         ImageView ivProfileImage;
         ImageView ivImage;
         TextView tvBody;
+        TextView tvName;
+        TextView tvRelativeTimeAgo;
         TextView tvScreenName;
         public ViewHolder(@NonNull View itemView){
             super(itemView);
             ivProfileImage=itemView.findViewById(R.id.ivProfileImage);
             ivImage=itemView.findViewById(R.id.ivImage);
             tvBody=itemView.findViewById(R.id.tvBody);
+            tvName=itemView.findViewById(R.id.tvName);
             tvScreenName=itemView.findViewById(R.id.tvScreenName);
+            tvRelativeTimeAgo=itemView.findViewById(R.id.tvRelativeTimeAgo);
         }
 
         public void bind(Tweet tweet) {
             //Log.d(TAG, "bind: "+tweet.body);
+            int radiusIP = 100; // corner radius, higher value = more rounded
+            int radiusM = 100;
             tvBody.setText(tweet.body);
-            tvScreenName.setText(tweet.user.screenName);
-            Glide.with(context).load(tweet.user.profileImageUrl).into(ivProfileImage);
+            tvName.setText(tweet.user.name);
+            tvScreenName.setText("@"+tweet.user.screenName);
+
+            Glide.with(context).load(tweet.user.profileImageUrl)
+                    .apply(new RequestOptions()
+                            .centerCrop() // scale image to fill the entire ImageView
+                            .transform(new RoundedCorners(radiusIP))
+                    )
+                    .into(ivProfileImage);
             if(tweet.imageURL!=null){
-                Glide.with(context).load(tweet.imageURL).into(ivImage);
+
+                Glide.with(context).load(tweet.imageURL)
+                        .apply(new RequestOptions()
+                                .centerCrop() // scale image to fill the entire ImageView
+                                .transform(new RoundedCorners(radiusM))
+                        )
+                        .into(ivImage);
                 ivImage.setVisibility(View.VISIBLE);
             }
             else{
                 ivImage.setVisibility(View.GONE);
             }
+            tvRelativeTimeAgo.setText(tweet.relativeTimeAgo);
 
         }
     }

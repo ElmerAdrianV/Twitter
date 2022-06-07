@@ -4,18 +4,50 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="3dp">
+    android:background="@drawable/textlines"
+    android:padding="0dp">
+
+    <TextView
+        android:id="@+id/tvRelativeTimeAgo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/tvScreenName"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="0dp"
+        android:text="5m"
+        android:textColor="#BCBABA"
+        android:textSize="14sp" />
 
     <TextView
         android:id="@+id/tvScreenName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/tvName"
+        android:layout_marginStart="2dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginBottom="0dp"
+        android:layout_toEndOf="@+id/tvName"
+        android:text="ElmerAdrianV"
+        android:textColor="#BCBABA"
+        android:textSize="12sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tvName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/ivProfileImage"
         android:layout_marginStart="5dp"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="0dp"
         android:layout_marginEnd="5dp"
         android:layout_marginBottom="5dp"
         android:layout_toEndOf="@+id/ivProfileImage"
-        android:text="ElmerAdrianV" />
+        android:fontFamily="sans-serif-black"
+        android:text="ElmerAdrianV"
+        android:textColor="#BCBABA"
+        android:textSize="16sp"
+        android:textStyle="bold" />
 
     <ImageView
         android:id="@+id/ivProfileImage"
@@ -31,12 +63,14 @@
         android:id="@+id/tvBody"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tvScreenName"
+        android:layout_below="@+id/tvName"
         android:layout_marginStart="5dp"
         android:layout_marginTop="2dp"
-        android:layout_marginEnd="5dp"
+        android:layout_marginEnd="12dp"
         android:layout_toEndOf="@+id/ivProfileImage"
-        android:text="This is my tweet!!!" />
+        android:fontFamily="sans-serif"
+        android:text="This is my tweet!!!"
+        android:textColor="#FFFFFF" />
 
     <ImageView
         android:id="@+id/ivImage"
@@ -45,6 +79,7 @@
         android:layout_below="@+id/tvBody"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="5dp"
+        android:layout_marginBottom="10dp"
         android:adjustViewBounds="true"
         android:scaleType="fitXY"
         android:visibility="visible"
