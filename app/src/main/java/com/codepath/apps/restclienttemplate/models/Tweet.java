@@ -17,6 +17,8 @@ import java.util.Locale;
 
 public class Tweet {
     public String body;
+    public Long tweetID;
+    public boolean favorited;
     public String createAt;
     public String imageURL;
     public User user;
@@ -51,6 +53,8 @@ public class Tweet {
        tweet.relativeTimeAgo= tweet.getRelativeTimeAgo(tweet.createAt);
        tweet.retweetCount= jsonObject.getInt("retweet_count");
        tweet.favoriteCount=jsonObject.getInt("favorite_count");
+       tweet.tweetID=jsonObject.getLong("id");
+       tweet.favorited=jsonObject.getBoolean("favorited");
        return tweet;
     }
     public static List<Tweet> fromJsonArray(JSONArray jsonArray) throws JSONException {

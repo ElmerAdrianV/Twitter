@@ -70,6 +70,8 @@
         android:layout_toEndOf="@+id/ivProfileImage"
         android:fontFamily="sans-serif"
         android:text="This is my tweet!!!"
+        android:autoLink="all"
+        android:linksClickable="true"
         android:textColor="#FFFFFF" />
 
     <ImageView
@@ -110,6 +112,8 @@
         android:layout_toEndOf="@+id/btnReply"
         android:background="#00FFFFFF"
         android:backgroundTint="#FFFFFF"
+        android:clickable="true"
+        android:foreground="?android:attr/selectableItemBackground"
         android:foregroundTint="#FFFFFF"
         android:text="Button"
         app:srcCompat="@drawable/ic_vector_retweet_stroke" />
@@ -124,7 +128,9 @@
         android:layout_marginTop="5dp"
         android:background="#00FFFFFF"
         android:text="Button"
-        app:srcCompat="@drawable/ic_vector_heart_stroke" />
+        app:srcCompat="@drawable/ic_vector_heart_stroke"
+        android:clickable="true"
+        android:foreground="?android:attr/selectableItemBackground"/>
 
     <TextView
         android:id="@+id/tvRetweetCount"
@@ -135,7 +141,10 @@
         android:layout_marginTop="3dp"
         android:layout_toEndOf="@+id/btnRetweet"
         android:text="12"
-        android:textColor="#555353" />
+        android:textColor="#555353"
+        android:clickable="true"
+        android:foreground="?android:attr/selectableItemBackground"
+        />
 
     <TextView
         android:id="@+id/tvFavCount"

@@ -1,11 +1,15 @@
 package com.codepath.apps.restclienttemplate;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -14,8 +18,12 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
 import com.codepath.apps.restclienttemplate.models.Tweet;
+import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
 
 import java.util.List;
+import java.util.regex.Pattern;
+
+import okhttp3.Headers;
 
 public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder> {
     Context context;
@@ -69,6 +77,8 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
         TextView tvScreenName;
         TextView tvFavCount;
         TextView tvRetweetCount;
+        ImageButton btnLike;
+        private android.transition.Transition.TransitionListener mEnterTransitionListener;
         public ViewHolder(@NonNull View itemView){
             super(itemView);
             ivProfileImage=itemView.findViewById(R.id.ivProfileImage);
@@ -79,6 +89,8 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
             tvRelativeTimeAgo=itemView.findViewById(R.id.tvRelativeTimeAgo);
             tvFavCount=itemView.findViewById(R.id.tvFavCount);
             tvRetweetCount=itemView.findViewById(R.id.tvRetweetCount);
+            btnLike=itemView.findViewById(R.id.btnLike);
+
         }
 
         public void bind(Tweet tweet) {
@@ -86,8 +98,35 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
             int radiusIP = 100; // corner radius, higher value = more rounded
             int radiusM = 80;
             tvBody.setText(tweet.body);
+            new PatternEditableBuilder().
+                    addPattern(Pattern.compile("\\@(\\w+)"), Color.BLUE,
+                            new PatternEditableBuilder.SpannableClickedListener() {
+                                @Override
+                                public void onSpanClicked(String text) {
+                                    Toast.makeText(context, "Clicked username: " + text,
+                                            Toast.LENGTH_SHORT).show();
+                                }
+                            }).into(tvBody);
+            new PatternEditableBuilder().addPattern(Pattern.compile("\\#(\\w+)"), Color.CYAN,
+                    new PatternEditableBuilder.SpannableClickedListener() {
+                        @Override
+                        public void onSpanClicked(String text) {
+                            Toast.makeText(context, "Clicked hashtag: " + text,
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                    }).into(tvBody);
+
             tvName.setText(tweet.user.name);
             tvScreenName.setText("@"+tweet.user.screenName);
+            new PatternEditableBuilder().
+                    addPattern(Pattern.compile("\\@(\\w+)"), Color.BLUE,
+                            new PatternEditableBuilder.SpannableClickedListener() {
+                                @Override
+                                public void onSpanClicked(String text) {
+                                    Toast.makeText(context, "Clicked username: " + text,
+                                            Toast.LENGTH_SHORT).show();
+                                }
+                            }).into(tvScreenName);
 
             Glide.with(context).load(tweet.user.profileImageUrl)
                     .apply(new RequestOptions()
@@ -112,6 +151,54 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
 
             tvFavCount.setText(tweet.favoriteCount+"");
             tvRetweetCount.setText(tweet.retweetCount+"");
+            TwitterClient client = new TwitterClient(context);
+            if(tweet.favorited)
+                btnLike.setImageResource(R.drawable.ic_vector_heart);
+
+
+            btnLike.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    tweet.favorited=!tweet.favorited;
+
+                    if(tweet.favorited) {
+                        client.likeTweet(tweet.tweetID, new JsonHttpResponseHandler() {
+                            @Override
+                            public void onSuccess(int statusCode, Headers headers, JSON json) {
+                                tweet.favoriteCount++;
+                                tvFavCount.setText(tweet.favoriteCount +"");
+                                btnLike.setImageResource(R.drawable.ic_vector_heart);
+                                Toast.makeText(context, "Liked", Toast.LENGTH_SHORT).show();
+                            }
+
+                            @Override
+                            public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
+
+                            }
+                        });
+                    }
+                    else {
+
+                        client.unLikeTweet(tweet.tweetID, new JsonHttpResponseHandler() {
+                            @Override
+                            public void onSuccess(int statusCode, Headers headers, JSON json) {
+                                tweet.favoriteCount--;
+                                tvFavCount.setText(tweet.favoriteCount+"");
+                                btnLike.setImageResource(R.drawable.ic_vector_heart_stroke);
+                                Toast.makeText(context, "Unliked", Toast.LENGTH_SHORT).show();
+                            }
+
+                            @Override
+                            public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
+
+                            }
+                        });
+                    }
+
+                }
+            });
+
+
 
         }
     }
