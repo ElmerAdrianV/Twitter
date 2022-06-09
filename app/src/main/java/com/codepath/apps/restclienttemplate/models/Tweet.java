@@ -32,7 +32,11 @@ public class Tweet {
        Tweet tweet= new Tweet();
 
 
-       tweet.body=jsonObject.getString("text");
+        if(jsonObject.has("full_text")) {
+            tweet.body = jsonObject.getString("full_text");
+        } else {
+            tweet.body = jsonObject.getString("text");
+        }
        tweet.createAt=jsonObject.getString("created_at");
        if(jsonObject.getJSONObject("entities").has("media")){
            JSONArray mediaArray=jsonObject.getJSONObject("entities").getJSONArray("media");

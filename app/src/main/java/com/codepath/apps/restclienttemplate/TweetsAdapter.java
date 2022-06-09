@@ -80,7 +80,7 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
         public void bind(Tweet tweet) {
             //Log.d(TAG, "bind: "+tweet.body);
             int radiusIP = 100; // corner radius, higher value = more rounded
-            int radiusM = 100;
+            int radiusM = 80;
             tvBody.setText(tweet.body);
             tvName.setText(tweet.user.name);
             tvScreenName.setText("@"+tweet.user.screenName);

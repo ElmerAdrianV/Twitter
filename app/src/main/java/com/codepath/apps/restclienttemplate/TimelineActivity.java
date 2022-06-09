@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -16,11 +17,13 @@ import android.widget.Toast;
 
 import com.codepath.apps.restclienttemplate.models.Tweet;
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.parceler.Parcels;
 
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,8 +38,10 @@ public class TimelineActivity extends AppCompatActivity {
     RecyclerView rvTweets;
     List<Tweet> tweets;
     TweetsAdapter adapter;
-    Button btnLogout;
+
     private SwipeRefreshLayout swipeContainer;
+    FloatingActionButton fabCompose;
+
 
 
 
@@ -44,7 +49,7 @@ public class TimelineActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_timeline);
-
+        fabCompose=findViewById(R.id.fabCompose);
         client =TwitterApp.getRestClient(this);
         ///Find the recycler view
          rvTweets = findViewById(R.id.rvTweets);
@@ -53,7 +58,7 @@ public class TimelineActivity extends AppCompatActivity {
         adapter = new TweetsAdapter(this, tweets);
         rvTweets.setLayoutManager(new LinearLayoutManager(this));
         rvTweets.setAdapter(adapter);
-        btnLogout=findViewById(R.id.btnLogout);
+
 
 
         // Lookup the swipe container view
@@ -76,23 +81,17 @@ public class TimelineActivity extends AppCompatActivity {
 
         //recycler view setup: layout manager and the adapter
         populateHomeTimeline();
-        btnLogout.setOnClickListener(new View.OnClickListener() {
+
+        fabCompose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
-                onLogoutButton(v);
+                //Compose icon has been selected
+                Toast.makeText(TimelineActivity.this, "Compose!", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(TimelineActivity.this, ComposeActivity.class);
+                startActivityForResult(intent,REQUEST_CODE);
             }
 
-            void onLogoutButton(View view) {
-                // forget who's logged in
-                TwitterApp.getRestClient(TimelineActivity.this).clearAccessToken();
 
-                // navigate backwards to Login screen
-                Intent i = new Intent(TimelineActivity.this, LoginActivity.class);
-                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); // this makes sure the Back button won't work
-                i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK); // same as above
-                startActivity(i);
-            }
         });
     }
     public void fetchTimelineAsync(int page) {
@@ -124,6 +123,7 @@ public class TimelineActivity extends AppCompatActivity {
 
             }
         });
+
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
@@ -132,13 +132,23 @@ public class TimelineActivity extends AppCompatActivity {
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item){
-        if(item.getItemId()==R.id.compose){
-            //Compose icon has been selected
-            //Toast.makeText(this, "Compose!", Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(this, ComposeActivity.class);
+        switch (item.getItemId()){
+            case R.id.compose:
+                //Compose icon has been selected
+                //Toast.makeText(this, "Compose!", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(this, ComposeActivity.class);
+                startActivityForResult(intent,REQUEST_CODE);
+                return true;
+            case R.id.logout:
+                // forget who's logged in
+                TwitterApp.getRestClient(TimelineActivity.this).clearAccessToken();
 
-            startActivityForResult(intent,REQUEST_CODE);
-            return true;
+                // navigate backwards to Login screen
+                Intent i = new Intent(TimelineActivity.this, LoginActivity.class);
+                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); // this makes sure the Back button won't work
+                i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK); // same as above
+                startActivity(i);
+                return true;
         }
         return super.onOptionsItemSelected(item);
     }

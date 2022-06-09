@@ -7,7 +7,7 @@
     android:background="#000000"
     tools:context=".TimelineActivity">
 
-    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/swipeContainer"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -16,15 +16,19 @@
             android:id="@+id/rvTweets"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
+
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
-    <Button
-        android:id="@+id/btnLogout"
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabCompose"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginEnd="0dp"
-        android:layout_marginBottom="0dp"
-        android:text="Log Out" />
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:background="@color/twitter_blue"
+        android:clickable="true"
+        app:backgroundTint="@color/twitter_blue"
+        app:srcCompat="@drawable/ic_vector_compose" />
 </RelativeLayout>
