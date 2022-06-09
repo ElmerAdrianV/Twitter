@@ -133,12 +133,6 @@ public class TimelineActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item){
         switch (item.getItemId()){
-            case R.id.compose:
-                //Compose icon has been selected
-                //Toast.makeText(this, "Compose!", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(this, ComposeActivity.class);
-                startActivityForResult(intent,REQUEST_CODE);
-                return true;
             case R.id.logout:
                 // forget who's logged in
                 TwitterApp.getRestClient(TimelineActivity.this).clearAccessToken();
