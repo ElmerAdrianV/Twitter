@@ -21,6 +21,8 @@ public class Tweet {
     public String imageURL;
     public User user;
     public String relativeTimeAgo;
+    public int favoriteCount;
+    public int retweetCount;
     private static final int SECOND_MILLIS = 1000;
     private static final int MINUTE_MILLIS = 60 * SECOND_MILLIS;
     private static final int HOUR_MILLIS = 60 * MINUTE_MILLIS;
@@ -47,6 +49,8 @@ public class Tweet {
        }
        tweet.user=User.fromJson(jsonObject.getJSONObject("user"));
        tweet.relativeTimeAgo= tweet.getRelativeTimeAgo(tweet.createAt);
+       tweet.retweetCount= jsonObject.getInt("retweet_count");
+       tweet.favoriteCount=jsonObject.getInt("favorite_count");
        return tweet;
     }
     public static List<Tweet> fromJsonArray(JSONArray jsonArray) throws JSONException {
