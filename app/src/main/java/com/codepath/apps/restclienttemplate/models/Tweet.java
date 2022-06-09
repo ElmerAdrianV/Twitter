@@ -19,6 +19,7 @@ public class Tweet {
     public String body;
     public Long tweetID;
     public boolean favorited;
+    public boolean retweeted;
     public String createAt;
     public String imageURL;
     public User user;
@@ -55,6 +56,7 @@ public class Tweet {
        tweet.favoriteCount=jsonObject.getInt("favorite_count");
        tweet.tweetID=jsonObject.getLong("id");
        tweet.favorited=jsonObject.getBoolean("favorited");
+       tweet.retweeted=jsonObject.getBoolean("retweeted");
        return tweet;
     }
     public static List<Tweet> fromJsonArray(JSONArray jsonArray) throws JSONException {

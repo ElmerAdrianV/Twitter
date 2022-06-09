@@ -78,6 +78,7 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
         TextView tvFavCount;
         TextView tvRetweetCount;
         ImageButton btnLike;
+        ImageButton btnRetweet;
         private android.transition.Transition.TransitionListener mEnterTransitionListener;
         public ViewHolder(@NonNull View itemView){
             super(itemView);
@@ -90,6 +91,7 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
             tvFavCount=itemView.findViewById(R.id.tvFavCount);
             tvRetweetCount=itemView.findViewById(R.id.tvRetweetCount);
             btnLike=itemView.findViewById(R.id.btnLike);
+            btnRetweet=itemView.findViewById(R.id.btnRetweet);
 
         }
 
@@ -197,7 +199,50 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
 
                 }
             });
+            if(tweet.retweeted)
+                btnRetweet.setImageResource(R.drawable.ic_vector_retweet);
 
+            btnRetweet.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    tweet.retweeted=!tweet.retweeted;
+
+                    if(tweet.retweeted) {
+                        client.retweet(tweet.tweetID, new JsonHttpResponseHandler() {
+                            @Override
+                            public void onSuccess(int statusCode, Headers headers, JSON json) {
+                                tweet.retweetCount++;
+                                tvRetweetCount.setText(tweet.retweetCount+"");
+                                btnRetweet.setImageResource(R.drawable.ic_vector_retweet);
+                                Toast.makeText(context, "Retweet", Toast.LENGTH_SHORT).show();
+                            }
+
+                            @Override
+                            public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
+                                //Toast.makeText(context, "Error1", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
+                    else {
+
+                        client.unretweet(tweet.tweetID, new JsonHttpResponseHandler() {
+                            @Override
+                            public void onSuccess(int statusCode, Headers headers, JSON json) {
+                                tweet.retweetCount--;
+                                tvRetweetCount.setText(tweet.retweetCount+"");
+                                btnRetweet.setImageResource(R.drawable.ic_vector_retweet_stroke);
+                                Toast.makeText(context, "Unretweet", Toast.LENGTH_SHORT).show();
+                            }
+
+                            @Override
+                            public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
+                                //Toast.makeText(context, "Error2", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
+
+                }
+            });
 
 
         }
