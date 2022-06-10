@@ -43,6 +43,7 @@ public class TimelineActivity extends AppCompatActivity {
     FloatingActionButton fabCompose;
 
 
+
     // Store a member variable for the listener
     private EndlessRecyclerViewScrollListener scrollListener;
 
@@ -62,6 +63,7 @@ public class TimelineActivity extends AppCompatActivity {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         rvTweets.setLayoutManager(linearLayoutManager);
         rvTweets.setAdapter(adapter);
+
 
         // Retain an instance so that you can call `resetState()` for fresh searches
         scrollListener = new EndlessRecyclerViewScrollListener(linearLayoutManager) {
@@ -97,12 +99,11 @@ public class TimelineActivity extends AppCompatActivity {
 
         //recycler view setup: layout manager and the adapter
         populateHomeTimeline();
-
         fabCompose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //Compose icon has been selected
-                Toast.makeText(TimelineActivity.this, "Compose!", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(TimelineActivity.this, "Compose!", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(TimelineActivity.this, ComposeActivity.class);
                 startActivityForResult(intent,REQUEST_CODE);
             }
@@ -113,10 +114,6 @@ public class TimelineActivity extends AppCompatActivity {
     // Append the next page of data into the adapter
     // This method probably sends out a network request and appends new data items to your adapter.
     public void loadNextDataFromApi(int offset) {
-
-
-
-
         // Send an API request to retrieve appropriate paginated data
         //  --> Send the request including an offset value (i.e `page`) as a query parameter.
         client.getHomeTimeLine(new JsonHttpResponseHandler(){
@@ -170,8 +167,6 @@ public class TimelineActivity extends AppCompatActivity {
                 swipeContainer.setRefreshing(false);
                 rvTweets.smoothScrollToPosition(0);
                 Log.d(TAG, "onSuccess: Estoy funcionando");
-
-
             }
 
             @Override

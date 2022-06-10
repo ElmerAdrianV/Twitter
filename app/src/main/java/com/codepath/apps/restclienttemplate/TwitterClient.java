@@ -104,6 +104,21 @@ public class TwitterClient extends OAuthBaseClient {
 		params.put("id", tweetId);
 		client.post(apiUrl, params,"", handler);
 	}
+	public void getFollowing(Long user_id,JsonHttpResponseHandler handler){
+		String apiUrl = getApiUrl("friends/list.json");
+		getListUser(apiUrl,user_id,handler);
+	}
+	public void getFolllowers(Long user_id,JsonHttpResponseHandler handler){
+		String apiUrl = getApiUrl("followers/list.json");
+		getListUser(apiUrl,user_id,handler);
+	}
+	public void getListUser(String apiUrl,Long user_id,JsonHttpResponseHandler handler){
+		// Can specify query string params directly or through RequestParams.
+		RequestParams params = new RequestParams();
+		params.put("id", user_id);
+		params.put("count",25);
+		client.get(apiUrl, params, handler);
+	}
 
 	/* 1. Define the endpoint URL with getApiUrl and pass a relative path to the endpoint
 	 * 	  i.e getApiUrl("statuses/home_timeline.json");

@@ -80,7 +80,10 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
         ImageButton btnLike;
         ImageButton btnRetweet;
         ImageButton btnImageProfile;
-        private android.transition.Transition.TransitionListener mEnterTransitionListener;
+        ImageButton btnReply;
+        FloatingActionButton fabCompose;
+
+
         public ViewHolder(@NonNull View itemView){
             super(itemView);
 
