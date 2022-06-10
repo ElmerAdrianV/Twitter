@@ -2,6 +2,7 @@ package com.codepath.apps.restclienttemplate;
 
 import android.content.Context;
 
+import com.codepath.apps.restclienttemplate.models.Tweet;
 import com.codepath.asynchttpclient.RequestParams;
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
 import com.codepath.oauth.OAuthBaseClient;
@@ -50,13 +51,13 @@ public class TwitterClient extends OAuthBaseClient {
 	// CHANGE THIS
 	// DEFINE METHODS for different API endpoints here
 	public void getHomeTimeLine(JsonHttpResponseHandler handler, int currentOffset) {
-		int page=currentOffset/25;//each page have 25 tweets
+		int page=currentOffset/Tweet.NUMBER_TWEETS_REQUEST;//each page have 25 tweets
 
 		String apiUrl = getApiUrl("statuses/home_timeline.json");
 		// Can specify query string params directly or through RequestParams.
 		RequestParams params = new RequestParams();
 		params.put("tweet_mode", "extended");
-		params.put("count", 25);
+		params.put("count", Tweet.NUMBER_TWEETS_REQUEST);
 		params.put("since_id", 1);
 		params.put("page",page);
 		client.get(apiUrl, params, handler);

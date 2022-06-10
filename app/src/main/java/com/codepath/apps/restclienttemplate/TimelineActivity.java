@@ -35,13 +35,14 @@ public class TimelineActivity extends AppCompatActivity {
     TwitterClient client;
     public static final String TAG = "TimelineActivity.java";
     private final int REQUEST_CODE = 20;
-    private int currentOffset=25;//Count number of tweets in the timeline
+    private int currentOffset=Tweet.NUMBER_TWEETS_REQUEST;//Count number of tweets in the timeline
+    private SwipeRefreshLayout swipeContainer;
     RecyclerView rvTweets;
     List<Tweet> tweets;
     TweetsAdapter adapter;
-
-    private SwipeRefreshLayout swipeContainer;
     FloatingActionButton fabCompose;
+
+
     // Store a member variable for the listener
     private EndlessRecyclerViewScrollListener scrollListener;
 
@@ -133,7 +134,7 @@ public class TimelineActivity extends AppCompatActivity {
 
                     //  --> Notify the adapter of the new items made with `notifyItemRangeInserted()`
 
-                    adapter.notifyItemRangeInserted(currentOffset,25);
+                    adapter.notifyItemRangeInserted(currentOffset,Tweet.NUMBER_TWEETS_REQUEST);
                     currentOffset+=25;
                 }
                 catch(JSONException e){
