@@ -1,6 +1,7 @@
 package com.codepath.apps.restclienttemplate;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 
 import android.view.LayoutInflater;
@@ -19,6 +20,9 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
 import com.codepath.apps.restclienttemplate.models.Tweet;
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import org.parceler.Parcels;
 
 import java.util.List;
 import java.util.regex.Pattern;
@@ -28,7 +32,7 @@ import okhttp3.Headers;
 public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder> {
     Context context;
     List<Tweet> tweets;
-
+    private final int REQUEST_CODE = 20;
 
     public TweetsAdapter(Context context, List<Tweet> tweets) {
         this.context = context;
@@ -57,10 +61,8 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         //Get the data at position
         Tweet tweet = tweets.get(position);
-
         //Bind the tweet with view holder
         holder.bind(tweet);
-
     }
 
     @Override
@@ -96,7 +98,7 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
             tvRetweetCount=itemView.findViewById(R.id.tvRetweetCount);
             btnLike=itemView.findViewById(R.id.btnLike);
             btnRetweet=itemView.findViewById(R.id.btnRetweet);
-            btnImageProfile = itemView.findViewById(R.id.btnImageProfile);
+            btnImageProfile = itemView.findViewById(R.id.ivImageProfile);
 
         }
 
@@ -247,6 +249,14 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
                         });
                     }
 
+                }
+            });
+            btnImageProfile.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(context, ListUserActivity.class);
+                    intent.putExtra("User", Parcels.wrap( tweet.user) );
+                    context.startActivity(intent);
                 }
             });
 
