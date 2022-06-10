@@ -1,5 +1,9 @@
 package com.codepath.apps.restclienttemplate.models;
 
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -9,12 +13,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Parcel
+@Entity
 public class User {
+    @ColumnInfo
     public String name;
+    @ColumnInfo
     public String screenName;
+    @ColumnInfo
     public String profileImageUrl;
+    @ColumnInfo
     public String description;
-    public long user_id;
+    @ColumnInfo
+    @PrimaryKey
+    public long id;
 
 
     public User(){}
@@ -24,7 +35,7 @@ public class User {
         user.screenName=jsonObject.getString("screen_name");
         user.profileImageUrl=jsonObject.getString("profile_image_url_https");
         user.description=jsonObject.getString("description");
-        user.user_id=jsonObject.getLong("id");
+        user.id =jsonObject.getLong("id");
         return user;
     }
     public static List<User> fromJsonArray(JSONArray jsonArray) throws JSONException {

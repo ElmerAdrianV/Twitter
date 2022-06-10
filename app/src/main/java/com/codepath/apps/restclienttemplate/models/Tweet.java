@@ -2,6 +2,12 @@ package com.codepath.apps.restclienttemplate.models;
 
 import android.util.Log;
 
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.ForeignKey;
+import androidx.room.Ignore;
+import androidx.room.PrimaryKey;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -14,17 +20,30 @@ import java.util.List;
 import java.util.Locale;
 
 @Parcel
-
+@Entity(foreignKeys = @ForeignKey(entity=User.class, parentColumns="id", childColumns="user_  id"))
 public class Tweet {
     public String body;
+
+    @ColumnInfo
+    @PrimaryKey
     public Long tweetID;
+    @ColumnInfo
     public boolean favorited;
+    @ColumnInfo
     public boolean retweeted;
+    @ColumnInfo
     public String createAt;
+    @ColumnInfo
     public String imageURL;
+    @ColumnInfo
+    public Long userId;
+    @Ignore
     public User user;
+    @ColumnInfo
     public String relativeTimeAgo;
+    @ColumnInfo
     public int favoriteCount;
+    @ColumnInfo
     public int retweetCount;
     private static final int SECOND_MILLIS = 1000;
     private static final int MINUTE_MILLIS = 60 * SECOND_MILLIS;
@@ -58,6 +77,7 @@ public class Tweet {
        tweet.tweetID=jsonObject.getLong("id");
        tweet.favorited=jsonObject.getBoolean("favorited");
        tweet.retweeted=jsonObject.getBoolean("retweeted");
+       tweet.userId=tweet.user.id;
        return tweet;
     }
     public static List<Tweet> fromJsonArray(JSONArray jsonArray) throws JSONException {

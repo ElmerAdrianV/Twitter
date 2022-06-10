@@ -10,12 +10,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
-import com.codepath.apps.restclienttemplate.models.Tweet;
 import com.codepath.apps.restclienttemplate.models.User;
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
 
@@ -97,7 +95,7 @@ public class ListUserActivity extends AppCompatActivity {
 
     }
     private void populateFollowers() {
-        client.getFolllowers(user.user_id,new JsonHttpResponseHandler(){
+        client.getFolllowers(user.id,new JsonHttpResponseHandler(){
 
             @Override
             public void onSuccess(int statusCode, Headers headers, JSON json) {
@@ -123,7 +121,7 @@ public class ListUserActivity extends AppCompatActivity {
         });
     }
     private void populateFollowing() {
-        client.getFollowing(user.user_id,new JsonHttpResponseHandler(){
+        client.getFollowing(user.id,new JsonHttpResponseHandler(){
 
             @Override
             public void onSuccess(int statusCode, Headers headers, JSON json) {

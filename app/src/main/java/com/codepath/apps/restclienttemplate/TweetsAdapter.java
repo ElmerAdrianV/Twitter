@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,7 +33,8 @@ import okhttp3.Headers;
 public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder> {
     Context context;
     List<Tweet> tweets;
-    private final int REQUEST_CODE = 20;
+
+
 
     public TweetsAdapter(Context context, List<Tweet> tweets) {
         this.context = context;
@@ -61,16 +63,20 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         //Get the data at position
         Tweet tweet = tweets.get(position);
+
         //Bind the tweet with view holder
         holder.bind(tweet);
     }
+
 
     @Override
     public int getItemCount() {
         return tweets.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
+
+
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         ImageView ivImage;
         TextView tvBody;
@@ -82,8 +88,7 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
         ImageButton btnLike;
         ImageButton btnRetweet;
         ImageButton btnImageProfile;
-        ImageButton btnReply;
-        FloatingActionButton fabCompose;
+
 
 
         public ViewHolder(@NonNull View itemView){
@@ -99,8 +104,9 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
             btnLike=itemView.findViewById(R.id.btnLike);
             btnRetweet=itemView.findViewById(R.id.btnRetweet);
             btnImageProfile = itemView.findViewById(R.id.ivImageProfile);
-
+            itemView.setOnClickListener(this);
         }
+
 
         public void bind(Tweet tweet) {
             //Log.d(TAG, "bind: "+tweet.body);
@@ -253,5 +259,24 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
 
 
         }
+        @Override
+        public void onClick(View v) {
+            //gets item position
+            int position=getAdapterPosition();
+            Toast.makeText(context,"HOlaaa",Toast.LENGTH_LONG).show();
+            if(position!=RecyclerView.NO_POSITION){
+                Tweet movie = tweets.get(position);
+                //create intent for the new activity
+                Intent intent = new Intent(context, TweetDetails.class);
+                intent.putExtra(Tweet.class.getSimpleName(), Parcels.wrap(movie));
+                //show the activity
+                context.startActivity(intent);
+                Log.d("Onclick///", "onClick:Entree ");
+            }
+        }
+
+
     }
+
+
 }

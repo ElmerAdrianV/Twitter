@@ -3,32 +3,17 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:background="@drawable/textlines"
-    android:clickable="true"
-    android:foreground="?android:attr/selectableItemBackground"
-    android:foregroundTint="#FFFFFF"
     android:padding="0dp">
-
-    <TextView
-        android:id="@+id/tvRelativeTimeAgo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/tvName"
-        android:layout_alignParentEnd="true"
-        android:layout_marginEnd="10dp"
-        android:layout_marginBottom="-0dp"
-        android:text="5m"
-        android:textColor="#BCBABA"
-        android:textSize="14sp" />
 
     <TextView
         android:id="@+id/tvScreenName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tvName"
-        android:layout_marginStart="5dp"
-        android:layout_marginTop="2dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="5dp"
         android:layout_marginEnd="5dp"
         android:layout_toEndOf="@+id/ivImageProfile"
         android:text="ElmerAdrianV"
@@ -44,13 +29,12 @@
         android:layout_marginStart="5dp"
         android:layout_marginTop="0dp"
         android:layout_marginEnd="5dp"
-        android:layout_marginBottom="0dp"
-        android:layout_toStartOf="@+id/tvRelativeTimeAgo"
+        android:layout_marginBottom="5dp"
         android:layout_toEndOf="@+id/ivImageProfile"
         android:fontFamily="sans-serif-black"
         android:text="ElmerAdrianV"
         android:textColor="#BCBABA"
-        android:textSize="16sp"
+        android:textSize="18sp"
         android:textStyle="bold" />
 
 
@@ -58,22 +42,21 @@
         android:id="@+id/ivImageProfile"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_marginStart="5dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginEnd="5dp"
-        android:layout_marginBottom="5dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
         android:background="#00FFFFFF"
         tools:srcCompat="@tools:sample/avatars" />
 
     <TextView
         android:id="@+id/tvBody"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tvScreenName"
-        android:layout_marginStart="5dp"
-        android:layout_marginTop="7dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="18dp"
         android:layout_marginEnd="12dp"
-        android:layout_toEndOf="@+id/ivImageProfile"
         android:autoLink="all"
         android:fontFamily="sans-serif"
         android:linksClickable="true"
@@ -87,7 +70,6 @@
         android:layout_below="@+id/tvBody"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="5dp"
-        android:layout_marginBottom="10dp"
         android:adjustViewBounds="true"
         android:scaleType="fitXY"
         android:visibility="visible"
@@ -101,7 +83,7 @@
         android:layout_below="@+id/ivImage"
         android:layout_alignParentStart="true"
         android:layout_marginStart="80dp"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="40dp"
         android:backgroundTint="@color/twitter_blue"
         android:foregroundTint="#FFFFFF"
         android:text="btnLike"
@@ -129,7 +111,7 @@
         android:id="@+id/btnLike"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/tvRetweetCount"
+        android:layout_alignStart="@+id/btnRetweet"
         android:layout_alignTop="@+id/btnReply"
         android:layout_marginStart="60dp"
         android:layout_marginTop="5dp"
@@ -138,30 +120,6 @@
         android:foreground="?android:attr/selectableItemBackground"
         android:text="Button"
         app:srcCompat="@drawable/ic_vector_heart_stroke" />
-
-    <TextView
-        android:id="@+id/tvRetweetCount"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/btnRetweet"
-        android:layout_marginStart="3dp"
-        android:layout_marginTop="3dp"
-        android:layout_toEndOf="@+id/btnRetweet"
-        android:clickable="true"
-        android:foreground="?android:attr/selectableItemBackground"
-        android:text="12"
-        android:textColor="#555353" />
-
-    <TextView
-        android:id="@+id/tvFavCount"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/btnLike"
-        android:layout_marginStart="5dp"
-        android:layout_marginTop="3dp"
-        android:layout_toEndOf="@+id/btnLike"
-        android:text="12"
-        android:textColor="#555353" />
 
 
 </RelativeLayout>
