@@ -26,7 +26,7 @@ public class Tweet {
 
     @ColumnInfo
     @PrimaryKey
-    public Long tweetID;
+    public Long id;
     @ColumnInfo
     public boolean favorited;
     @ColumnInfo
@@ -74,7 +74,7 @@ public class Tweet {
        tweet.relativeTimeAgo= tweet.getRelativeTimeAgo(tweet.createAt);
        tweet.retweetCount= jsonObject.getInt("retweet_count");
        tweet.favoriteCount=jsonObject.getInt("favorite_count");
-       tweet.tweetID=jsonObject.getLong("id");
+       tweet.id =jsonObject.getLong("id");
        tweet.favorited=jsonObject.getBoolean("favorited");
        tweet.retweeted=jsonObject.getBoolean("retweeted");
        tweet.userId=tweet.user.id;

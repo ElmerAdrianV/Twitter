@@ -14,7 +14,6 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
 import com.codepath.apps.restclienttemplate.models.Tweet;
-import com.codepath.apps.restclienttemplate.models.User;
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
 
 import org.parceler.Parcels;
@@ -101,7 +100,7 @@ public class TweetDetails extends AppCompatActivity {
                 tweet.favorited=!tweet.favorited;
 
                 if(tweet.favorited) {
-                    client.likeTweet(tweet.tweetID, new JsonHttpResponseHandler() {
+                    client.likeTweet(tweet.id, new JsonHttpResponseHandler() {
                         @Override
                         public void onSuccess(int statusCode, Headers headers, JSON json) {
                             tweet.favoriteCount++;
@@ -118,7 +117,7 @@ public class TweetDetails extends AppCompatActivity {
                 }
                 else {
 
-                    client.unLikeTweet(tweet.tweetID, new JsonHttpResponseHandler() {
+                    client.unLikeTweet(tweet.id, new JsonHttpResponseHandler() {
                         @Override
                         public void onSuccess(int statusCode, Headers headers, JSON json) {
                             tweet.favoriteCount--;
@@ -145,7 +144,7 @@ public class TweetDetails extends AppCompatActivity {
                 tweet.retweeted=!tweet.retweeted;
 
                 if(tweet.retweeted) {
-                    client.retweet(tweet.tweetID, new JsonHttpResponseHandler() {
+                    client.retweet(tweet.id, new JsonHttpResponseHandler() {
                         @Override
                         public void onSuccess(int statusCode, Headers headers, JSON json) {
                             tweet.retweetCount++;
@@ -162,7 +161,7 @@ public class TweetDetails extends AppCompatActivity {
                 }
                 else {
 
-                    client.unretweet(tweet.tweetID, new JsonHttpResponseHandler() {
+                    client.unretweet(tweet.id, new JsonHttpResponseHandler() {
                         @Override
                         public void onSuccess(int statusCode, Headers headers, JSON json) {
                             tweet.retweetCount--;

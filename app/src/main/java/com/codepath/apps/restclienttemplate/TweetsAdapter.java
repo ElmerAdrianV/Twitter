@@ -21,7 +21,6 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
 import com.codepath.apps.restclienttemplate.models.Tweet;
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.parceler.Parcels;
 
@@ -169,7 +168,7 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
                     tweet.favorited=!tweet.favorited;
 
                     if(tweet.favorited) {
-                        client.likeTweet(tweet.tweetID, new JsonHttpResponseHandler() {
+                        client.likeTweet(tweet.id, new JsonHttpResponseHandler() {
                             @Override
                             public void onSuccess(int statusCode, Headers headers, JSON json) {
                                 tweet.favoriteCount++;
@@ -186,7 +185,7 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
                     }
                     else {
 
-                        client.unLikeTweet(tweet.tweetID, new JsonHttpResponseHandler() {
+                        client.unLikeTweet(tweet.id, new JsonHttpResponseHandler() {
                             @Override
                             public void onSuccess(int statusCode, Headers headers, JSON json) {
                                 tweet.favoriteCount--;
@@ -213,7 +212,7 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
                     tweet.retweeted=!tweet.retweeted;
 
                     if(tweet.retweeted) {
-                        client.retweet(tweet.tweetID, new JsonHttpResponseHandler() {
+                        client.retweet(tweet.id, new JsonHttpResponseHandler() {
                             @Override
                             public void onSuccess(int statusCode, Headers headers, JSON json) {
                                 tweet.retweetCount++;
@@ -230,7 +229,7 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
                     }
                     else {
 
-                        client.unretweet(tweet.tweetID, new JsonHttpResponseHandler() {
+                        client.unretweet(tweet.id, new JsonHttpResponseHandler() {
                             @Override
                             public void onSuccess(int statusCode, Headers headers, JSON json) {
                                 tweet.retweetCount--;
