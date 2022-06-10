@@ -107,21 +107,11 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
             int radiusIP = 100; // corner radius, higher value = more rounded
             int radiusM = 80;
             tvBody.setText(tweet.body);
-            new PatternEditableBuilder().
-                    addPattern(Pattern.compile("\\@(\\w+)"), Color.BLUE,
-                            new PatternEditableBuilder.SpannableClickedListener() {
-                                @Override
-                                public void onSpanClicked(String text) {
-                                    Toast.makeText(context, "Clicked username: " + text,
-                                            Toast.LENGTH_SHORT).show();
-                                }
-                            }).into(tvBody);
             new PatternEditableBuilder().addPattern(Pattern.compile("\\#(\\w+)"), Color.CYAN,
                     new PatternEditableBuilder.SpannableClickedListener() {
                         @Override
                         public void onSpanClicked(String text) {
-                            Toast.makeText(context, "Clicked hashtag: " + text,
-                                    Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(context, "Clicked hashtag: " + text,Toast.LENGTH_SHORT).show();
                         }
                     }).into(tvBody);
 
@@ -132,8 +122,9 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
                             new PatternEditableBuilder.SpannableClickedListener() {
                                 @Override
                                 public void onSpanClicked(String text) {
-                                    Toast.makeText(context, "Clicked username: " + text,
-                                            Toast.LENGTH_SHORT).show();
+                                    Intent intent = new Intent(context, ListUserActivity.class);
+                                    intent.putExtra("User", Parcels.wrap( tweet.user) );
+                                    context.startActivity(intent);
                                 }
                             }).into(tvScreenName);
 
