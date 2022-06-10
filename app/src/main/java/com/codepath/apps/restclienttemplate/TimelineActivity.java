@@ -33,31 +33,46 @@ import okhttp3.Headers;
 
 public class TimelineActivity extends AppCompatActivity {
     TwitterClient client;
-    public static final String TAG= "TimelineActivity.java";
-    private final int REQUEST_CODE=20;
+    public static final String TAG = "TimelineActivity.java";
+    private final int REQUEST_CODE = 20;
+    private int currentOffset=25;//Count number of tweets in the timeline
     RecyclerView rvTweets;
     List<Tweet> tweets;
     TweetsAdapter adapter;
 
     private SwipeRefreshLayout swipeContainer;
     FloatingActionButton fabCompose;
-
-
+    // Store a member variable for the listener
+    private EndlessRecyclerViewScrollListener scrollListener;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_timeline);
-        fabCompose=findViewById(R.id.fabCompose);
-        client =TwitterApp.getRestClient(this);
+
+        fabCompose = findViewById(R.id.fabCompose);
+        client = TwitterApp.getRestClient(this);
         ///Find the recycler view
-         rvTweets = findViewById(R.id.rvTweets);
+        rvTweets = findViewById(R.id.rvTweets);
         //init the list of tweets and adapter
         tweets = new ArrayList<>();
         adapter = new TweetsAdapter(this, tweets);
-        rvTweets.setLayoutManager(new LinearLayoutManager(this));
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        rvTweets.setLayoutManager(linearLayoutManager);
         rvTweets.setAdapter(adapter);
+
+        // Retain an instance so that you can call `resetState()` for fresh searches
+        scrollListener = new EndlessRecyclerViewScrollListener(linearLayoutManager) {
+            @Override
+            public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
+                // Triggered only when new data needs to be appended to the list
+                // Add whatever code is needed to append new items to the bottom of the list
+                loadNextDataFromApi(page);
+            }
+        };
+        // Adds the scroll listener to RecyclerView
+        rvTweets.addOnScrollListener(scrollListener);
 
 
 
@@ -94,6 +109,45 @@ public class TimelineActivity extends AppCompatActivity {
 
         });
     }
+    // Append the next page of data into the adapter
+    // This method probably sends out a network request and appends new data items to your adapter.
+    public void loadNextDataFromApi(int offset) {
+
+
+
+
+        // Send an API request to retrieve appropriate paginated data
+        //  --> Send the request including an offset value (i.e `page`) as a query parameter.
+        client.getHomeTimeLine(new JsonHttpResponseHandler(){
+
+            @Override
+            public void onSuccess(int statusCode, Headers headers, JSON json) {
+
+                Log.i(TAG,"OnSuccess"+json.toString() );
+
+                JSONArray jsonArray= json.jsonArray;
+                try{
+                    //  --> Deserialize and construct new model objects from the API response
+                    //  --> Append the new data objects to the existing set of items inside the array of items
+                    tweets.addAll(Tweet.fromJsonArray(jsonArray));
+
+                    //  --> Notify the adapter of the new items made with `notifyItemRangeInserted()`
+
+                    adapter.notifyItemRangeInserted(currentOffset,25);
+                    currentOffset+=25;
+                }
+                catch(JSONException e){
+                    Log.e(TAG,"JsonException"+e);
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
+                Log.e(TAG,"OnFailure", throwable );
+            }
+        },currentOffset);
+
+    }
     public void fetchTimelineAsync(int page) {
         // Send the network request to fetch the updated data
         // `client` here is an instance of Android Async HTTP
@@ -115,6 +169,8 @@ public class TimelineActivity extends AppCompatActivity {
                 swipeContainer.setRefreshing(false);
                 rvTweets.smoothScrollToPosition(0);
                 Log.d(TAG, "onSuccess: Estoy funcionando");
+
+
             }
 
             @Override

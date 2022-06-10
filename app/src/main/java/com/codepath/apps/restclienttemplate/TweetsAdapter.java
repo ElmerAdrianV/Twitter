@@ -2,7 +2,7 @@ package com.codepath.apps.restclienttemplate;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.util.Log;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,7 +28,7 @@ import okhttp3.Headers;
 public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder> {
     Context context;
     List<Tweet> tweets;
-    String TAG= TweetsAdapter.class.getSimpleName();
+
 
     public TweetsAdapter(Context context, List<Tweet> tweets) {
         this.context = context;
@@ -69,7 +69,7 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
-        ImageView ivProfileImage;
+
         ImageView ivImage;
         TextView tvBody;
         TextView tvName;
@@ -79,10 +79,11 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
         TextView tvRetweetCount;
         ImageButton btnLike;
         ImageButton btnRetweet;
+        ImageButton btnImageProfile;
         private android.transition.Transition.TransitionListener mEnterTransitionListener;
         public ViewHolder(@NonNull View itemView){
             super(itemView);
-            ivProfileImage=itemView.findViewById(R.id.ivProfileImage);
+
             ivImage=itemView.findViewById(R.id.ivImage);
             tvBody=itemView.findViewById(R.id.tvBody);
             tvName=itemView.findViewById(R.id.tvName);
@@ -92,6 +93,7 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
             tvRetweetCount=itemView.findViewById(R.id.tvRetweetCount);
             btnLike=itemView.findViewById(R.id.btnLike);
             btnRetweet=itemView.findViewById(R.id.btnRetweet);
+            btnImageProfile = itemView.findViewById(R.id.btnImageProfile);
 
         }
 
@@ -121,7 +123,7 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
             tvName.setText(tweet.user.name);
             tvScreenName.setText("@"+tweet.user.screenName);
             new PatternEditableBuilder().
-                    addPattern(Pattern.compile("\\@(\\w+)"), Color.BLUE,
+                    addPattern(Pattern.compile("\\@(\\w+)"), Color.rgb(188, 186, 186),
                             new PatternEditableBuilder.SpannableClickedListener() {
                                 @Override
                                 public void onSpanClicked(String text) {
@@ -130,12 +132,13 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
                                 }
                             }).into(tvScreenName);
 
+
             Glide.with(context).load(tweet.user.profileImageUrl)
                     .apply(new RequestOptions()
                             .centerCrop() // scale image to fill the entire ImageView
                             .transform(new RoundedCorners(radiusIP))
                     )
-                    .into(ivProfileImage);
+                    .into(btnImageProfile);
             if(tweet.imageURL!=null){
 
                 Glide.with(context).load(tweet.imageURL)
@@ -170,7 +173,7 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
                                 tweet.favoriteCount++;
                                 tvFavCount.setText(tweet.favoriteCount +"");
                                 btnLike.setImageResource(R.drawable.ic_vector_heart);
-                                Toast.makeText(context, "Liked", Toast.LENGTH_SHORT).show();
+                                //Toast.makeText(context, "Liked", Toast.LENGTH_SHORT).show();
                             }
 
                             @Override
@@ -187,7 +190,7 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
                                 tweet.favoriteCount--;
                                 tvFavCount.setText(tweet.favoriteCount+"");
                                 btnLike.setImageResource(R.drawable.ic_vector_heart_stroke);
-                                Toast.makeText(context, "Unliked", Toast.LENGTH_SHORT).show();
+                                //Toast.makeText(context, "Unliked", Toast.LENGTH_SHORT).show();
                             }
 
                             @Override
@@ -214,7 +217,7 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
                                 tweet.retweetCount++;
                                 tvRetweetCount.setText(tweet.retweetCount+"");
                                 btnRetweet.setImageResource(R.drawable.ic_vector_retweet);
-                                Toast.makeText(context, "Retweet", Toast.LENGTH_SHORT).show();
+                                //Toast.makeText(context, "Retweet", Toast.LENGTH_SHORT).show();
                             }
 
                             @Override
@@ -231,7 +234,7 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
                                 tweet.retweetCount--;
                                 tvRetweetCount.setText(tweet.retweetCount+"");
                                 btnRetweet.setImageResource(R.drawable.ic_vector_retweet_stroke);
-                                Toast.makeText(context, "Unretweet", Toast.LENGTH_SHORT).show();
+                                //Toast.makeText(context, "Unretweet", Toast.LENGTH_SHORT).show();
                             }
 
                             @Override

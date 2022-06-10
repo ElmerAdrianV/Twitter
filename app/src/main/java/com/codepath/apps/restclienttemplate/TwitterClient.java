@@ -45,12 +45,20 @@ public class TwitterClient extends OAuthBaseClient {
 	// CHANGE THIS
 	// DEFINE METHODS for different API endpoints here
 	public void getHomeTimeLine(JsonHttpResponseHandler handler) {
+		getHomeTimeLine(handler,0);
+	}
+	// CHANGE THIS
+	// DEFINE METHODS for different API endpoints here
+	public void getHomeTimeLine(JsonHttpResponseHandler handler, int currentOffset) {
+		int page=currentOffset/25;//each page have 25 tweets
+
 		String apiUrl = getApiUrl("statuses/home_timeline.json");
 		// Can specify query string params directly or through RequestParams.
 		RequestParams params = new RequestParams();
 		params.put("tweet_mode", "extended");
 		params.put("count", 25);
 		params.put("since_id", 1);
+		params.put("page",page);
 		client.get(apiUrl, params, handler);
 	}
 	// CHANGE THIS
@@ -86,7 +94,6 @@ public class TwitterClient extends OAuthBaseClient {
 		// Can specify query string params directly or through RequestParams.
 		RequestParams params = new RequestParams();
 		params.put("id", tweetId);
-
 		client.post(apiUrl, params,"", handler);
 	}
 	public void unretweet(Long tweetId,JsonHttpResponseHandler handler){

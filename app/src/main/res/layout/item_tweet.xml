@@ -37,26 +37,28 @@
         android:id="@+id/tvName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/ivProfileImage"
+        android:layout_alignTop="@+id/btnImageProfile"
         android:layout_marginStart="5dp"
         android:layout_marginTop="0dp"
         android:layout_marginEnd="5dp"
         android:layout_marginBottom="5dp"
-        android:layout_toEndOf="@+id/ivProfileImage"
+        android:layout_toEndOf="@+id/btnImageProfile"
         android:fontFamily="sans-serif-black"
         android:text="ElmerAdrianV"
         android:textColor="#BCBABA"
         android:textSize="16sp"
         android:textStyle="bold" />
 
-    <ImageView
-        android:id="@+id/ivProfileImage"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+
+    <ImageButton
+        android:id="@+id/btnImageProfile"
         android:layout_marginStart="5dp"
         android:layout_marginTop="5dp"
         android:layout_marginEnd="5dp"
         android:layout_marginBottom="5dp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:background="#00FFFFFF"
         tools:srcCompat="@tools:sample/avatars" />
 
     <TextView
@@ -67,11 +69,11 @@
         android:layout_marginStart="5dp"
         android:layout_marginTop="2dp"
         android:layout_marginEnd="12dp"
-        android:layout_toEndOf="@+id/ivProfileImage"
-        android:fontFamily="sans-serif"
-        android:text="This is my tweet!!!"
+        android:layout_toEndOf="@+id/btnImageProfile"
         android:autoLink="all"
+        android:fontFamily="sans-serif"
         android:linksClickable="true"
+        android:text="This is my tweet!!!"
         android:textColor="#FFFFFF" />
 
     <ImageView
@@ -86,6 +88,7 @@
         android:scaleType="fitXY"
         android:visibility="visible"
         tools:srcCompat="@tools:sample/avatars" />
+
 
     <ImageButton
         android:id="@+id/btnReply"
@@ -127,10 +130,10 @@
         android:layout_marginStart="60dp"
         android:layout_marginTop="5dp"
         android:background="#00FFFFFF"
-        android:text="Button"
-        app:srcCompat="@drawable/ic_vector_heart_stroke"
         android:clickable="true"
-        android:foreground="?android:attr/selectableItemBackground"/>
+        android:foreground="?android:attr/selectableItemBackground"
+        android:text="Button"
+        app:srcCompat="@drawable/ic_vector_heart_stroke" />
 
     <TextView
         android:id="@+id/tvRetweetCount"
@@ -140,11 +143,10 @@
         android:layout_marginStart="3dp"
         android:layout_marginTop="3dp"
         android:layout_toEndOf="@+id/btnRetweet"
-        android:text="12"
-        android:textColor="#555353"
         android:clickable="true"
         android:foreground="?android:attr/selectableItemBackground"
-        />
+        android:text="12"
+        android:textColor="#555353" />
 
     <TextView
         android:id="@+id/tvFavCount"
